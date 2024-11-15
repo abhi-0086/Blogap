@@ -56,3 +56,22 @@ exports.updateUser = async (req, res) => {
         return res.status(500).json(createResponse(500, "Server error : " + err.message));
     }
 };
+
+
+exports.deleteUser = async (req, res) => {
+    try{
+        const userId = req.user.id;
+        if(!userId){
+            return res.status(404).json(createResponse(404, 'Invalid request, no data found !'));
+        }
+        const deleteduser = await getUserProfile(userId);
+        await deleteUserAccount(userId);
+        if(!deleteduser){
+            return res.status(400).json(createResponse(400, 'Failed to deleted user !'));
+        }
+        return res.status(200).json(createResponse(200, 'User deleted succesfully!', deleteduser));
+    }catch(err){
+        console.log(err.message);
+        return res.status(500).json(createResponse(500, 'Server error : ' + err.message))
+    }
+}
