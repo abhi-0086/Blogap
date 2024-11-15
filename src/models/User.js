@@ -39,14 +39,14 @@ const userSchema = new mongoose.Schema(
       type: Date,
       default: Date.now(),
     },
-    followerIds: {
+    followerIds: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-    },
-    followingIds: {
+    }],
+    followingIds: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-    },
+    }],
     postCount: {
       type: Number,
       default: 0,
