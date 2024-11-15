@@ -24,4 +24,21 @@ const loginUser = async (email, password) => {
     return {user, token};
 }
 
-module.exports = {registerUser, loginUser};
+//fetch user profile by userid
+const getUserProfile = async (userId) =>{
+    return await User.findById(userId).select('-password'); //exclude password for security purposes
+}
+
+
+//update user profile
+const updateUserProfile = async (userId, profileData) => {
+    const updatedUser = await User.findByIdAndUpdate(userId, profileData, {new:true, runValidators:true}).select('-password');
+    return updatedUser;
+}
+
+//delete user account
+const deleteUserAccount = async(userId) => {
+    return await User.findByIdAndDelete(userId);
+}
+
+module.exports = {registerUser, loginUser, getUserProfile, updateUserProfile, deleteUserAccount};

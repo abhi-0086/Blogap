@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken')
 const createResponse = require('../utils/responseStructure')
 
 const auth = (req, res, next) => {
-    const token = req.header('Authorization')?.replace('Bearer', '');
+    const token = req.header('Authorization')?.replace('Bearer ', '');
     if(!token){
         return res.status(401).json(createResponse(401, 'Access denied ! No token provided '));
     }
