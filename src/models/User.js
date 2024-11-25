@@ -4,17 +4,17 @@ const userSchema = new mongoose.Schema(
   {
     username: {
       type: String,
-      required: true,
+      required: [true, 'Username is required'],
       unique: true,
     },
     email: {
       type: String,
-      required: true,
+      required: [true, 'Email is required'],
       unique: true,
     },
     password: {
       type: String,
-      required: true,
+      required: [true, 'Password is required'],
     },
     bio: {
       type: String,
@@ -63,5 +63,33 @@ const userSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+//middleware to check if username/email already exists
+userSchema.pre('save', async function (next){
+  try{ 
+    const existingUser = await mongoose.model('User').findOne({
+      $or:[{email: this.email}, {username :this.username}]
+    });
+    if(existingUser){
+      const error = new Error('Username or email already exists');
+      error.status = 400;
+      return next(error);
+    }
+  }catch(error){
+    return next(error) //db error
+  }
+  next();
+});
+
+//middleware to validate the email format
+userSchema.pre('save', function (next){
+  const eamilRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+  if(!eamilRegex.test(this.email)){
+    const error = new Error('Invalid email !');
+    error.status = 400;
+    return next(error)
+  }
+  next();
+});
 
 module.exports = mongoose.model("User", userSchema);
