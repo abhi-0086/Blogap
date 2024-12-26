@@ -20,6 +20,11 @@ const swaggerOptions = {
   apis: ["./src/routes/*.js"],
 };
 
+//swagger-ui configuration
+const swaggerUiOptions = {
+  customSiteTitle: 'Blog API Documentation'  // Set the custom title for the Swagger UI tab
+};
+
 //create express app
 const app = express();
 
@@ -33,7 +38,7 @@ app.use(express.json());
 const swaggerSpec = swaggerJSDoc(swaggerOptions);
 
 //routes
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use("/api/v1/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec, swaggerUiOptions));
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/post", postRoutes);
@@ -41,7 +46,7 @@ app.use("/api/v1/post", postRoutes);
 //placeholder route
 app.get("/", (req, res) => {
   res.send(
-    "Welcome to Blog API find the application documentation at /api-docs"
+    "Welcome to Blog API find the application documentation at /api/v1/docs"
   );
 });
 

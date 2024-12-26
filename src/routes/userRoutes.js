@@ -7,11 +7,13 @@ const router = express.Router();
 
 /**
  * @swagger
- * /api/users/profile:
+ * /api/v1/users:
  *   get:
  *     description: Retrieve the current user's profile
  *     security:
  *       - BearerAuth: []  # Using Bearer authentication for this route
+ *     tags:
+ *       - Profile
  *     responses:
  *       200:
  *         description: Successfully fetched user profile
@@ -33,15 +35,17 @@ const router = express.Router();
  *         description: Unauthorized, if no valid token is provided
  */
 //get user profile
-router.get('/profile', auth, getUser);
+router.get('/', auth, getUser);
 
 /**
  * @swagger
- * /api/users/profile:
+ * /api/v1/users:
  *   put:
  *     description: Update the current user's profile information
  *     security:
  *       - BearerAuth: []  # Using Bearer authentication for this route
+ *     tags:
+ *       - Profile
  *     requestBody:
  *       required: true
  *       content:
@@ -74,15 +78,17 @@ router.get('/profile', auth, getUser);
  *         description: Not found, if the user doesn't exist
  */
 //update user profile data
-router.put('/profile', auth, updateUser);
+router.put('/', auth, updateUser);
 
 /**
  * @swagger
- * /api/users/profile:
+ * /api/v1/users:
  *   delete:
  *     description: Delete the current user's profile
  *     security:
  *       - BearerAuth: []  # Using Bearer authentication for this route
+ *     tags:
+ *       - Profile
  *     responses:
  *       200:
  *         description: Successfully deleted user profile
@@ -92,6 +98,6 @@ router.put('/profile', auth, updateUser);
  *         description: Not found, if the user doesn't exist
  */
 //delete user profile
-router.delete('/profile', auth, deleteUser);
+router.delete('/', auth, deleteUser);
 
 module.exports = router;
