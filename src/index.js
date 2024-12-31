@@ -4,6 +4,7 @@ const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const postRoutes = require("./routes/postRoutes");
+const categoryRoutes = require("./routes/categoryRoutes");
 const swaggerJSDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 
@@ -42,6 +43,7 @@ app.use("/api/v1/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec, swaggerUiO
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/post", postRoutes);
+app.use("/api/v1/category", categoryRoutes);
 
 //placeholder route
 app.get("/", (req, res) => {

@@ -1,4 +1,3 @@
-const { deleteUser } = require("../controllers/userController");
 const Post = require("../models/Post");
 const mongoose = require("mongoose");
 
